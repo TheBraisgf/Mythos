@@ -1,98 +1,93 @@
 # MYTHOS
 
-> **Discover worlds. Build yours.**
+> **Descubre mundos. Hazlos tuyos.**
 
-Mythos is a functional product demo for a platform where stories live: discover, own, read, collect, connect and create.
+Mythos es una demo funcional de una plataforma donde las historias viven: descubrir, comprar, leer, coleccionar, compartir y crear.
 
-This prototype is intentionally built with **vanilla HTML + CSS + JavaScript**. There is no backend, framework or build step.
+La primera versión está construida con **HTML + CSS + JavaScript vanilla**, sin backend ni build step. El objetivo no es simular un CRUD, sino enseñar el **product feel** de la visión de Mythos.
 
-## Run locally
+## Ejecutar localmente
 
-Open `index.html` directly, or use a tiny static server:
+Puedes abrir `index.html` directamente o usar:
 
 ```bash
 python -m http.server 8080
 ```
 
-Then visit `http://localhost:8080`.
+Después abre `http://localhost:8080`.
 
-## Implemented demo
+## Publicación
 
-- Discover home with hero, continue reading, trending, new releases and genres
-- Global search with Ctrl/Cmd + K shortcut
-- Work detail pages with preview, creator, tags and reviews
-- Simulated checkout and library ownership
-- Persistent library, wishlist, progress, follows, reviews, collections and notifications through localStorage
-- Comic reader simulation with progress and completion
-- Review creation
-- Creator profiles and follow state
-- Community activity feed
-- Public reader profile, level and XP
-- Collections and achievements
-- Notifications and settings mock
-- Creator Mode / Reader Mode
-- Creator Studio with metrics, revenue chart and work table
-- Create Work flow with simulated publishing
-- Responsive desktop/mobile navigation
-- Empty and edge states
+El repositorio incluye GitHub Actions para publicar automáticamente en GitHub Pages cada vez que cambia `main`.
 
-## Project structure
+En GitHub: **Settings → Pages → Source → GitHub Actions**.
+
+## Estructura
 
 ```text
 .
 ├── index.html
+├── .github/
+│   └── workflows/
+│       └── deploy.yml
 ├── data/
-│   └── data.js       # Mock domain data
+│   ├── works.js          # Catálogo visual y metadata
+│   ├── people.js         # Usuarios, creadores, reviews y logros
+│   └── community.js      # Actividad y notificaciones
 ├── css/
-│   └── styles.css    # Design system + responsive UI
+│   ├── tokens.css        # Variables de diseño
+│   ├── base.css          # Tipografía y fundamentos
+│   ├── components.css    # Navegación y componentes reutilizables
+│   ├── pages.css         # Patrones de páginas
+│   └── responsive.css    # Tablet y móvil
 └── js/
-    └── app.js        # Routing, state, interactions and mock services
+    ├── store.js          # Persistencia localStorage
+    └── app.js            # Routing, vistas y flujos de demo
 ```
 
-## Product model
+## Flujos principales
 
-The mock data is shaped around the future backend domain:
+### Lector
 
-`User · Creator · Work · Series · Edition · Genre · LibraryItem · Purchase · Review · Follow · WishlistItem · Collection · CollectionItem · ReadingProgress · Achievement · UserAchievement · Activity · Notification · List · ListItem · DigitalExtra`
+`Descubrir → Obra → Preview → Comprar → Biblioteca → Reader → Progreso → Terminar → Reseña → Seguir creador → Comunidad → Perfil`
 
-Only the entities needed by this demo are populated. The architecture deliberately keeps data and UI separate so a real API can replace the mock layer later.
+### Creador
 
-## Demo story
+`Modo Creador → Studio → Métricas → Mis obras → Crear obra → Información → Precio → Publicar → Obra publicada`
 
-The main product loop is designed to be demonstrable as:
+### Descubrimiento
 
-`Discover → Work → Purchase → Library → Reader → Review → Follow → Community → Profile → Creator Mode → Create Work → Publish`
+`Búsqueda → filtros por intención → ficha de obra → lista de deseos → biblioteca`
 
-## Replacing the mocks with a backend
+### Identidad
 
-1. Keep `data/data.js` as seed/development data.
-2. Introduce a small API service layer in `js/services/`.
-3. Replace the `store` calls in `js/app.js` with API calls for authenticated state.
-4. Move purchases, ownership and reading progress to server-side records.
-5. Add real authentication and authorization.
-6. Add object storage for covers and content.
-7. Add a payment provider such as Stripe Connect for creator payouts.
-8. Keep localStorage as a cache/offline fallback where useful.
+`Biblioteca + reseñas + colecciones + actividad + logros + XP → perfil personal`
 
-## Next roadmap
+## Mock data
 
-- Real SPA routing/history
-- Dedicated component modules
-- API/backend
-- Authentication
-- Real reader for EPUB/CBZ/PDF content
-- Creator uploads and moderation
-- Payments and creator payouts
-- Rich community discussions
-- Lists, comments and social graph
-- Digital extras
-- Events and releases
-- Analytics backed by real events
+La demo contiene un catálogo amplio de obras, varios creadores, usuarios, reseñas, colecciones, actividad, notificaciones y logros. Las portadas utilizan imágenes editoriales remotas para que la primera versión tenga un aspecto más humano y menos generado.
 
-## Brand
+## Estado persistente
 
-**MYTHOS**
+Se conserva en `localStorage`:
 
-*Your stories. Your world.*
+- biblioteca
+- compras
+- lista de deseos
+- progreso de lectura
+- reseñas
+- follows
+- colecciones
+- notificaciones
+- obras creadas
+- tema claro/oscuro
 
-*Imagine. Create. Share. Repeat.*
+## Próximo paso hacia producto real
+
+La arquitectura deja separada la información mock de la interfaz. Para pasar a producción habría que sustituir `store.js` por servicios API y añadir autenticación, base de datos, almacenamiento de archivos, pagos, moderación y un lector real.
+
+## Visión
+
+Mythos quiere ser el lugar donde las historias viven: una mezcla de biblioteca personal, descubrimiento, comunidad y plataforma para creadores.
+
+**Imagine. Create. Share. Repeat.**

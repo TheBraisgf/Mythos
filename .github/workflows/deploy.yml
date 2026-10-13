@@ -11,6 +11,12 @@ permissions:
   pages: write
   id-token: write
 
+# GitHub Pages solo admite un deployment activo a la vez.
+# Si hacemos varios commits seguidos, el último deployment cancela el anterior.
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
